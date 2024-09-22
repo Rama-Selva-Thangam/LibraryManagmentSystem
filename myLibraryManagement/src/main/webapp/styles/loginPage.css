@@ -54,3 +54,7 @@ button {
 #backBtn:hover {
   background-color: #e53935;
 }
+p {
+  color: #e53935;
+  text-align: center;
+}

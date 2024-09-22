@@ -177,7 +177,6 @@ public class Repository {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 
 		return bookList;
 	}
@@ -200,8 +199,51 @@ public class Repository {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println(userList.toString());
 		return userList;
+	}
+
+	public String[] isUserExists(int userId) {
+		String query = "SELECT user_id, password FROM users WHERE user_id = ?";
+		String[] userDetail = new String[2];
+
+		try (PreparedStatement pst = connection.prepareStatement(query)) {
+			pst.setInt(1, userId);
+			ResultSet rs = pst.executeQuery();
+
+			if (rs.next()) {
+				userDetail[0] = String.valueOf(rs.getInt("user_id"));
+				userDetail[1] = rs.getString("password");
+			} else {
+				return null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return userDetail;
+	}
+
+	public User getUserById(int userId) {
+		String query = "SELECT user_name, email, address, gender FROM user_details WHERE user_id = ?";
+		User user = null;
+
+		try (PreparedStatement pst = connection.prepareStatement(query)) {
+			pst.setInt(1, userId);
+			ResultSet rs = pst.executeQuery();
+
+			if (rs.next()) {
+				user = new User();
+				user.setUserId(userId);
+				user.setUserName(rs.getString("user_name"));
+				user.setEmail(rs.getString("email"));
+				user.setAddress(rs.getString("address"));
+				user.setGender(rs.getString("gender"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return user;
 	}
 
 }

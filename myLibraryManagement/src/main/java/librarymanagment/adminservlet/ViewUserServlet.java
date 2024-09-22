@@ -1,4 +1,4 @@
-package librarymanagment.servlet;
+package librarymanagment.adminservlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class ViewUserServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession(false);
 		ArrayList<User> usersToShow = Repository.getInstance().getAllUsers();
-		System.out.println(usersToShow.toString());
+		
 
 		if (usersToShow != null && !usersToShow.isEmpty()) {
 			session.setAttribute("users", usersToShow);

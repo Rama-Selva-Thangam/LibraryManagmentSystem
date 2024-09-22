@@ -10,7 +10,7 @@
 	</welcome-file-list>
 	<servlet>
 		<servlet-name>RegisterServlet</servlet-name>
-		<servlet-class>librarymanagment.servlet.RegisterServlet</servlet-class>
+		<servlet-class>librarymanagment.adminservlet.RegisterServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -19,7 +19,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>RemoveUserServlet</servlet-name>
-		<servlet-class>librarymanagment.servlet.RemoveUserServlet</servlet-class>
+		<servlet-class>librarymanagment.adminservlet.RemoveUserServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -28,7 +28,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>AddBookServlet</servlet-name>
-		<servlet-class>librarymanagment.servlet.AddBookServlet</servlet-class>
+		<servlet-class>librarymanagment.adminservlet.AddBookServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -37,7 +37,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>RemoveBookServlet</servlet-name>
-		<servlet-class>librarymanagment.servlet.RemoveBookServlet</servlet-class>
+		<servlet-class>librarymanagment.adminservlet.RemoveBookServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -46,7 +46,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>UpdateBookServlet</servlet-name>
-		<servlet-class>librarymanagment.servlet.UpdateBookServlet</servlet-class>
+		<servlet-class>librarymanagment.adminservlet.UpdateBookServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -55,7 +55,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>ViewBookServlet</servlet-name>
-		<servlet-class>librarymanagment.servlet.ViewBookServlet</servlet-class>
+		<servlet-class>librarymanagment.adminservlet.ViewBookServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -64,12 +64,21 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>ViewUserServlet</servlet-name>
-		<servlet-class>librarymanagment.servlet.ViewUserServlet</servlet-class>
+		<servlet-class>librarymanagment.adminservlet.ViewUserServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>ViewUserServlet</servlet-name>
 		<url-pattern>/viewUsers</url-pattern>
+	</servlet-mapping>
+		<servlet>
+		<servlet-name>LoginUserServlet</servlet-name>
+		<servlet-class>librarymanagment.userservlet.LoginUserServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>LoginUserServlet</servlet-name>
+		<url-pattern>/userlogin</url-pattern>
 	</servlet-mapping>
 
 </web-app>

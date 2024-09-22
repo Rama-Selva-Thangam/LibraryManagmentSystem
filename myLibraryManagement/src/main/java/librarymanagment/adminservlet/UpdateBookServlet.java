@@ -1,4 +1,4 @@
-package librarymanagment.servlet;
+package librarymanagment.adminservlet;
 
 import java.io.IOException;
 import java.util.HashMap;

@@ -10,13 +10,13 @@ pageEncoding="UTF-8"%>
   </head>
   <body>
     <div id="container">
-      <form id="userForm" action="userLogin">
-        <label for="userName">ADMIN ID :</label>
+      <form id="userForm">
+        <label for="userName">USER ID :</label>
         <input
           type="text"
           id="userName"
           name="userName"
-          placeholder="Enter USER ID"
+          placeholder="ENTER USER ID"
           required
         />
         <label for="password">PASSWORD :</label>
@@ -30,6 +30,7 @@ pageEncoding="UTF-8"%>
         <button id="submitBtn" type="button">SUBMIT</button>
         <button id="backBtn" type="button">GO BACK</button>
       </form>
+      <p id="message"></p>
     </div>
     <script src="js/userLogin.js"></script>
   </body>

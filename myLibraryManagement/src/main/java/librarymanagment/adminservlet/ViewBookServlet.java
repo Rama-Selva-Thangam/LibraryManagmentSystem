@@ -1,4 +1,4 @@
-package librarymanagment.servlet;
+package librarymanagment.adminservlet;
 
 import java.io.BufferedReader;
 import java.io.IOException;
