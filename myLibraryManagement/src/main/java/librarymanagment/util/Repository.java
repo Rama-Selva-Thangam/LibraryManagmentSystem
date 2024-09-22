@@ -76,9 +76,9 @@ public class Repository {
 		return false;
 	}
 
-	public boolean removeUser(String email) {
-		String deleteDetailsSQL = "DELETE FROM user_details WHERE email = ?";
-		String deleteUserSQL = "DELETE FROM users WHERE email = ?";
+	public boolean removeUser(int userId) {
+		String deleteDetailsSQL = "DELETE FROM user_details WHERE user_id = ?";
+		String deleteUserSQL = "DELETE FROM users WHERE user_id = ?";
 
 		try {
 			connection.setAutoCommit(false);
@@ -86,13 +86,13 @@ public class Repository {
 			try (PreparedStatement deleteDetailsStmt = connection.prepareStatement(deleteDetailsSQL);
 					PreparedStatement deleteUserStmt = connection.prepareStatement(deleteUserSQL)) {
 
-				deleteDetailsStmt.setString(1, email);
+				deleteDetailsStmt.setInt(1, userId);
 				if (deleteDetailsStmt.executeUpdate() == 0) {
 					connection.rollback();
 					return false;
 				}
 
-				deleteUserStmt.setString(1, email);
+				deleteUserStmt.setInt(1, userId);
 				if (deleteUserStmt.executeUpdate() > 0) {
 					connection.commit();
 					return true;

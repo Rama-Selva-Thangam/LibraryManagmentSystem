@@ -51,7 +51,7 @@ public class RegisterServlet extends HttpServlet {
             }
 
             try (PrintWriter out = response.getWriter()) {
-                out.print(new JSONObject(result).toJSONString());
+            	response.getWriter().write(new JSONObject(result).toJSONString());
             }
 
         } catch (ParseException e) {

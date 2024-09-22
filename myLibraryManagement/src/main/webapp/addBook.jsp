@@ -45,7 +45,7 @@ pageEncoding="UTF-8"%>
         </div>
       </form>
       <button type="button" id="backBtn">Back</button>
-      <p id="responseMessage"></p>
+      <p id="message"></p>
      
     </div>
     <script src="js/addBook.js"></script>

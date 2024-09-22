@@ -14,7 +14,7 @@ pageEncoding="UTF-8"%>
       <form id="removeUserForm">
         <div class="form-group">
           <label for="userId">Enter User ID to Remove :</label>
-          <input type="email" id="userId" name="userId" required />
+          <input type="number" id="userId" name="userId" required />
         </div>
 
         <div class="submit-btn">

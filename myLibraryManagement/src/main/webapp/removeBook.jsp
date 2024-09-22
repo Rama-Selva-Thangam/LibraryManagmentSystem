@@ -11,7 +11,7 @@ pageEncoding="UTF-8"%>
     <div class="form-container">
       <h2>Remove Book</h2>
 
-      <form id="removeUserForm">
+      <form id="removeBookForm">
         <div class="form-group">
           <label for="bookId">Enter Book ID to Remove :</label>
           <input type="text" id="bookId" name="bookId" required />

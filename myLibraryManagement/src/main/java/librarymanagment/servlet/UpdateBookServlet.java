@@ -49,6 +49,6 @@ public class UpdateBookServlet extends HttpServlet {
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}
 
-		response.getWriter().write(result.toString());
+		response.getWriter().write(new JSONObject(result).toJSONString());
 	}
 }

@@ -17,7 +17,7 @@
 		<servlet-name>RegisterServlet</servlet-name>
 		<url-pattern>/registerUser</url-pattern>
 	</servlet-mapping>
-		<servlet>
+	<servlet>
 		<servlet-name>RemoveUserServlet</servlet-name>
 		<servlet-class>librarymanagment.servlet.RemoveUserServlet</servlet-class>
 	</servlet>
@@ -26,7 +26,7 @@
 		<servlet-name>RemoveUserServlet</servlet-name>
 		<url-pattern>/removeUser</url-pattern>
 	</servlet-mapping>
-			<servlet>
+	<servlet>
 		<servlet-name>AddBookServlet</servlet-name>
 		<servlet-class>librarymanagment.servlet.AddBookServlet</servlet-class>
 	</servlet>
@@ -34,6 +34,33 @@
 	<servlet-mapping>
 		<servlet-name>AddBookServlet</servlet-name>
 		<url-pattern>/addBook</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>RemoveBookServlet</servlet-name>
+		<servlet-class>librarymanagment.servlet.RemoveBookServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>RemoveBookServlet</servlet-name>
+		<url-pattern>/removeBook</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>ViewBookServlet</servlet-name>
+		<servlet-class>librarymanagment.servlet.ViewBookServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ViewBookServlet</servlet-name>
+		<url-pattern>/viewBooks</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>ViewUserServlet</servlet-name>
+		<servlet-class>librarymanagment.servlet.ViewUserServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ViewUserServlet</servlet-name>
+		<url-pattern>/viewUsers</url-pattern>
 	</servlet-mapping>
 
 </web-app>

@@ -28,24 +28,29 @@ public class RemoveUserServlet extends HttpServlet {
         try {
             BufferedReader reader = request.getReader();
             JSONObject requestBody = (JSONObject) parser.parse(reader);
-            String userId = (String) requestBody.get("userId");
-            boolean isExist = Repository.getInstance().isUserExists(userId);
-            if (isExist) {
-                boolean isRemoved = Repository.getInstance().removeUser(userId);
-                result.put("message", isRemoved ? "User Removed Successfully" : "User Not Removed");
-                response.setStatus(isRemoved ? HttpServletResponse.SC_OK : HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            } else {
-                result.put("message", "User Not Found");
-                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            String userIdStr = (String) requestBody.get("userId");
+
+            if (userIdStr == null || userIdStr.isEmpty()) {
+                result.put("message", "User ID cannot be null or empty");
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                response.getWriter().write(new JSONObject(result).toJSONString());
+                return;
             }
+
+            int userId = Integer.parseInt(userIdStr);
+            boolean isRemoved = Repository.getInstance().removeUser(userId);
+            result.put("message", isRemoved ? "User Removed Successfully" : "User Not Removed");
+            response.setStatus(isRemoved ? HttpServletResponse.SC_OK : HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        } catch (NumberFormatException e) {
+            result.put("message", "User ID must be a valid integer");
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         } catch (ParseException e) {
-            result.put("message", "An error occurred: Invalid JSON input");
+            result.put("message", "Invalid JSON input");
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         } catch (Exception e) {
-            result.put("message", "An error occurred: " + e.getMessage());
+            result.put("message", "Error: " + e.getMessage());
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
-        JSONObject jsonResponse = new JSONObject(result);
-        response.getWriter().write(jsonResponse.toJSONString());
+        response.getWriter().write(new JSONObject(result).toJSONString());
     }
 }

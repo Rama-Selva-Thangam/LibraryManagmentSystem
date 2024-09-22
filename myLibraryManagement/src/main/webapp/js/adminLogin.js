@@ -3,13 +3,16 @@ document.getElementById("submitBtn").addEventListener("click", () => {
     let passwordValue = "admin";
     let admin = document.getElementById("userName").value;
     let password = document.getElementById("password").value;
+
     if (admin != adminName || password != passwordValue) {
-        alert("Invalid Admin Credientials");
+        alert("Invalid Admin Credentials");
         return;
     }
-    window.location.href = "adminProcess.jsp";
+    document.getElementById("adminForm").reset();
 
+    window.location.href = "adminProcess.jsp";
 });
+
 document.getElementById("backBtn").addEventListener("click", () => {
     window.history.back();
 });

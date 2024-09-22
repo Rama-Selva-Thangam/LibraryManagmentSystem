@@ -1,6 +1,8 @@
 package librarymanagment.servlet;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.ServletException;
@@ -40,9 +42,25 @@ public class AddBookServlet extends HttpServlet {
 			String bookName = (String) jsonObject.get("bookName");
 			String authorName = (String) jsonObject.get("authorName");
 			String edition = (String) jsonObject.get("edition");
-			long dateOfPublication = (long) jsonObject.get("dateOfPublication");
-			int stock = Integer.parseInt(jsonObject.get("stock").toString());
+			String dateOfPublicationStr = (String) jsonObject.get("dateOfPublication");
+			int stock = Integer.parseInt((String) jsonObject.get("stock"));
+
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			long dateOfPublication = 0;
+			try {
+				Date parsedDate = dateFormat.parse(dateOfPublicationStr);
+				dateOfPublication = parsedDate.getTime();
+			} catch (java.text.ParseException e) {
+				e.printStackTrace();
+				HashMap<String, String> res = new HashMap<>();
+				res.put("status", "error");
+				res.put("message", "Invalid date format.");
+				response.getWriter().write(new JSONObject(res).toJSONString());
+				return;
+			}
+
 			Book newBook = new Book(bookId, bookName, authorName, edition, dateOfPublication, stock);
+
 			boolean isBookAdded = Repository.getInstance().saveBook(newBook);
 
 			HashMap<String, String> res = new HashMap<>();
@@ -54,15 +72,20 @@ public class AddBookServlet extends HttpServlet {
 				res.put("message", "Failed to add the book.");
 			}
 
-			response.getWriter().write(res.toString());
+			response.getWriter().write(new JSONObject(res).toJSONString());
 
 		} catch (ParseException e) {
 			e.printStackTrace();
 			HashMap<String, String> res = new HashMap<>();
 			res.put("status", "error");
 			res.put("message", "Invalid JSON format.");
-			response.getWriter().write(res.toString());
+			response.getWriter().write(new JSONObject(res).toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+			HashMap<String, String> res = new HashMap<>();
+			res.put("status", "error");
+			res.put("message", "Error processing the request.");
+			response.getWriter().write(new JSONObject(res).toJSONString());
 		}
 	}
-
 }

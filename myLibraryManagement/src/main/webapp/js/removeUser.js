@@ -7,7 +7,7 @@ document.getElementById("submitBtn").addEventListener("click", async function ()
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-                "Accept": "application/json"       
+                "Accept": "application/json"
             },
             body: JSON.stringify({ userId })
         });
@@ -18,7 +18,7 @@ document.getElementById("submitBtn").addEventListener("click", async function ()
         }
 
         const result = await response.json();
-        alert(result.message);                
+        alert(result.message);
     } catch (error) {
         messageElement.textContent = "An error occurred: " + error.message;
     }

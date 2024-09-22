@@ -18,6 +18,7 @@ document.getElementById('removeBookBtn').addEventListener('click', function () {
 document.getElementById('updateBookBtn').addEventListener('click', function () {
     window.location.href = 'updateBook.jsp';
 });
+
 document.getElementById('viewAllBooksBtn').addEventListener('click', async function () {
     try {
         const response = await fetch('viewBooks', {
@@ -62,7 +63,7 @@ document.getElementById('viewAllUsersBtn').addEventListener('click', async funct
     }
 });
 document.getElementById('viewBooksIssued').addEventListener('click', function () {
-    window.location.href = 'updateBook.jsp';
+    window.location.href = 'viewBooksIssued.jsp';
 });
 document.getElementById('goBackBtn').addEventListener('click', function () {
     window.history.back();
