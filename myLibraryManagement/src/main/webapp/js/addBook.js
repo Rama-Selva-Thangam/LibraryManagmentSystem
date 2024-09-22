@@ -3,7 +3,7 @@ document.getElementById('submitBtn').addEventListener('click', async () => {
     const responseMessage = document.getElementById('responseMessage');
 
     try {
-        const response = await fetch('addNewBook', {
+        const response = await fetch('addBook', {
             method: 'POST',
             body: formData
         });

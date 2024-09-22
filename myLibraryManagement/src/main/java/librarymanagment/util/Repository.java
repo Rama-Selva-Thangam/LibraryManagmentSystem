@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 import librarymanagment.dto.Book;
 import librarymanagment.dto.User;
@@ -28,205 +30,177 @@ public class Repository {
 		return instance;
 	}
 
-	public Connection getConnection() {
-		return connection;
-	}
-
 	public boolean isUserExists(String email) {
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		try {
-			String sql = "SELECT COUNT(*) FROM users WHERE email = ?";
-			stmt = connection.prepareStatement(sql);
+		String query = "SELECT COUNT(*) FROM users WHERE email = ?";
+		try (PreparedStatement stmt = connection.prepareStatement(query)) {
 			stmt.setString(1, email);
-			rs = stmt.executeQuery();
-			if (rs.next()) {
-				return rs.getInt(1) > 0;
+			try (ResultSet rs = stmt.executeQuery()) {
+				return rs.next() && rs.getInt(1) > 0;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-				if (rs != null)
-					rs.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 		return false;
 	}
 
 	public boolean saveUser(User user) {
-		PreparedStatement userStmt = null;
-		PreparedStatement userDetailsStmt = null;
-		ResultSet rs = null;
-		try {
-			String userSql = "INSERT INTO users (email, password) VALUES (?, ?)";
-			userStmt = connection.prepareStatement(userSql);
+		String insertUserSQL = "INSERT INTO users (email, password) VALUES (?, ?)";
+		String userIdSQL = "SELECT user_id FROM users WHERE email = ?";
+		String insertDetailsSQL = "INSERT INTO user_details (user_id, user_name, email, address, gender) VALUES (?, ?, ?, ?, ?)";
+
+		try (PreparedStatement userStmt = connection.prepareStatement(insertUserSQL);
+				PreparedStatement userIdStmt = connection.prepareStatement(userIdSQL);
+				PreparedStatement userDetailsStmt = connection.prepareStatement(insertDetailsSQL)) {
+
 			userStmt.setString(1, user.getEmail());
 			userStmt.setString(2, user.getPassword());
-			int affectedRows = userStmt.executeUpdate();
-
-			if (affectedRows == 0) {
+			if (userStmt.executeUpdate() == 0)
 				return false;
-			}
-			String idSql = "SELECT user_id FROM users WHERE email = ?";
-			userStmt = connection.prepareStatement(idSql);
-			userStmt.setString(1, user.getEmail());
-			rs = userStmt.executeQuery();
 
-			if (rs.next()) {
-				int userId = rs.getInt("user_id");
+			userIdStmt.setString(1, user.getEmail());
+			try (ResultSet rs = userIdStmt.executeQuery()) {
+				if (rs.next()) {
+					int userId = rs.getInt("user_id");
 
-				String detailsSql = "INSERT INTO user_details (user_id, user_name, email, address, gender) VALUES (?, ?, ?, ?, ?)";
-				userDetailsStmt = connection.prepareStatement(detailsSql);
-				userDetailsStmt.setInt(1, userId);
-				userDetailsStmt.setString(2, user.getUserName());
-				userDetailsStmt.setString(3, user.getEmail());
-				userDetailsStmt.setString(4, user.getAddress());
-				userDetailsStmt.setString(5, user.getGender());
-				userDetailsStmt.executeUpdate();
-				return true;
+					userDetailsStmt.setInt(1, userId);
+					userDetailsStmt.setString(2, user.getUserName());
+					userDetailsStmt.setString(3, user.getEmail());
+					userDetailsStmt.setString(4, user.getAddress());
+					userDetailsStmt.setString(5, user.getGender());
+					return userDetailsStmt.executeUpdate() > 0;
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
-		} finally {
-			try {
-				if (userStmt != null)
-					userStmt.close();
-				if (userDetailsStmt != null)
-					userDetailsStmt.close();
-				if (rs != null)
-					rs.close();
-				if (connection != null)
-					connection.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 		return false;
 	}
 
 	public boolean removeUser(String email) {
-		PreparedStatement deleteDetailsStmt = null;
-		PreparedStatement deleteUserStmt = null;
+		String deleteDetailsSQL = "DELETE FROM user_details WHERE email = ?";
+		String deleteUserSQL = "DELETE FROM users WHERE email = ?";
+
 		try {
 			connection.setAutoCommit(false);
-			String deleteDetailsSQL = "DELETE FROM user_details WHERE email = ?";
-			deleteDetailsStmt = connection.prepareStatement(deleteDetailsSQL);
-			deleteDetailsStmt.setString(1, email);
-			int detailsDeleted = deleteDetailsStmt.executeUpdate();
-			if (detailsDeleted > 0) {
-				String deleteUserSQL = "DELETE FROM users WHERE email = ?";
-				deleteUserStmt = connection.prepareStatement(deleteUserSQL);
-				deleteUserStmt.setString(1, email);
-				int userDeleted = deleteUserStmt.executeUpdate();
 
-				if (userDeleted > 0) {
+			try (PreparedStatement deleteDetailsStmt = connection.prepareStatement(deleteDetailsSQL);
+					PreparedStatement deleteUserStmt = connection.prepareStatement(deleteUserSQL)) {
+
+				deleteDetailsStmt.setString(1, email);
+				if (deleteDetailsStmt.executeUpdate() == 0) {
+					connection.rollback();
+					return false;
+				}
+
+				deleteUserStmt.setString(1, email);
+				if (deleteUserStmt.executeUpdate() > 0) {
 					connection.commit();
 					return true;
 				} else {
 					connection.rollback();
 					return false;
 				}
-			} else {
-
-				connection.rollback();
-				return false;
 			}
-
 		} catch (SQLException e) {
-			if (connection != null) {
-				try {
-					connection.rollback();
-				} catch (SQLException rollbackEx) {
-					rollbackEx.printStackTrace();
-				}
+			try {
+				connection.rollback();
+			} catch (SQLException rollbackEx) {
+				rollbackEx.printStackTrace();
 			}
 			e.printStackTrace();
-			return false;
-
-		} finally {
-
-			try {
-				if (deleteDetailsStmt != null) {
-					deleteDetailsStmt.close();
-				}
-				if (deleteUserStmt != null) {
-					deleteUserStmt.close();
-				}
-				if (connection != null) {
-					connection.close();
-				}
-			} catch (SQLException closeEx) {
-				closeEx.printStackTrace();
-			}
 		}
+		return false;
 	}
 
 	public boolean saveBook(Book book) {
-		PreparedStatement preparedStatement = null;
+		String query = "INSERT INTO books (book_id, book_name, author_name, edition, date_of_publication, stock) VALUES (?, ?, ?, ?, ?, ?)";
 
-		try {
-			String insertBookSQL = "INSERT INTO books (book_id, book_name, author_name, edition, date_of_publication, stock) VALUES (?, ?, ?, ?, ?, ?)";
-			preparedStatement = connection.prepareStatement(insertBookSQL);
-			preparedStatement.setString(1, book.getBookId());
-			preparedStatement.setString(2, book.getBookName());
-			preparedStatement.setString(3, book.getAuthorName());
-			preparedStatement.setString(4, book.getEdition());
-			preparedStatement.setLong(5, book.getDateOfPublication());
-			preparedStatement.setInt(6, book.getStock());
-			int rowsInserted = preparedStatement.executeUpdate();
-			return rowsInserted > 0;
-
+		try (PreparedStatement stmt = connection.prepareStatement(query)) {
+			stmt.setString(1, book.getBookId());
+			stmt.setString(2, book.getBookName());
+			stmt.setString(3, book.getAuthorName());
+			stmt.setString(4, book.getEdition());
+			stmt.setLong(5, book.getDateOfPublication());
+			stmt.setInt(6, book.getStock());
+			return stmt.executeUpdate() > 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
-		} finally {
-
-			try {
-				if (preparedStatement != null) {
-					preparedStatement.close();
-				}
-				if (connection != null) {
-					connection.close();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
 		}
+		return false;
 	}
 
 	public boolean removeBook(String bookId) {
 		String query = "DELETE FROM books WHERE book_id = ?";
-
-		try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-			pstmt.setString(1, bookId);
-			int rowsAffected = pstmt.executeUpdate();
-			return rowsAffected > 0;
-
+		try (PreparedStatement stmt = connection.prepareStatement(query)) {
+			stmt.setString(1, bookId);
+			return stmt.executeUpdate() > 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
 		}
+		return false;
 	}
 
 	public boolean updateBook(String bookId, String stock) {
 		String query = "UPDATE books SET stock = ? WHERE book_id = ?";
-
-		try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-			pstmt.setInt(1, Integer.parseInt(stock));
-			pstmt.setString(2, bookId);
-			int rowsAffected = pstmt.executeUpdate();
-			return rowsAffected > 0;
-
+		try (PreparedStatement stmt = connection.prepareStatement(query)) {
+			stmt.setInt(1, Integer.parseInt(stock));
+			stmt.setString(2, bookId);
+			return stmt.executeUpdate() > 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
 		}
+		return false;
 	}
+
+	public ArrayList<Book> getAllBooks() {
+		ArrayList<Book> bookList = new ArrayList<>();
+		String query = "SELECT * FROM books";
+
+		try {
+			Statement smt = connection.createStatement();
+			ResultSet rs = smt.executeQuery(query);
+
+			while (rs.next()) {
+				String bookId = rs.getString("book_id");
+				String bookName = rs.getString("book_name");
+				String authorName = rs.getString("author_name");
+				String edition = rs.getString("edition");
+				long dateOfPublication = rs.getLong("date_of_publication");
+				int stock = rs.getInt("stock");
+
+				Book book = new Book(bookId, bookName, authorName, edition, dateOfPublication, stock);
+				bookList.add(book);
+			}
+
+			rs.close();
+			smt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return bookList;
+	}
+
+	public ArrayList<User> getAllUsers() {
+		ArrayList<User> userList = new ArrayList<>();
+		String sql = "SELECT * FROM user_details";
+
+		try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+
+			while (rs.next()) {
+				User user = new User();
+				user.setUserId(rs.getInt("user_id"));
+				user.setUserName(rs.getString("user_name"));
+				user.setEmail(rs.getString("email"));
+				user.setAddress(rs.getString("address"));
+				user.setGender(rs.getString("gender"));
+				userList.add(user);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return userList;
+	}
+
 }

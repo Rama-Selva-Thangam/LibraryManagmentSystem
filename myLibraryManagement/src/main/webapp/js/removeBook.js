@@ -1,18 +1,20 @@
 document.getElementById("submitBtn").addEventListener("click", async function () {
-    const bookId = document.getElementById("bookId").value;
+    const userId = document.getElementById("bookId").value;
     const messageElement = document.getElementById("message");
 
     try {
-        const response = await fetch(`removeBook?bookId=${encodeURIComponent(bookId)}`, {
+        const response = await fetch("removeBook", {
             method: "DELETE",
             headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            }
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({ bookId })
         });
 
         if (!response.ok) {
-            throw new Error("Network response was not ok.");
+            const errorResult = await response.json();
+            throw new Error(errorResult.message || "Network response was not ok.");
         }
 
         const result = await response.json();

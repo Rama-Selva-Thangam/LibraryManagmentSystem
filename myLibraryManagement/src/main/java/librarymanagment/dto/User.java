@@ -1,14 +1,18 @@
 package librarymanagment.dto;
 
 public class User {
-	private String userId;
+	private int userId;
 	private String userName;
 	private String email;
 	private String address;
 	private String gender;
 	private String password;
 
-	public User(String userName, String email, String address, String gender,String password) {
+	public User() {
+
+	}
+
+	public User(String userName, String email, String address, String gender, String password) {
 		this.userName = userName;
 		this.email = email;
 		this.address = address;
@@ -16,11 +20,11 @@ public class User {
 		this.setPassword(password);
 	}
 
-	public String getUserId() {
+	public int getUserId() {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(int userId) {
 		this.userId = userId;
 	}
 

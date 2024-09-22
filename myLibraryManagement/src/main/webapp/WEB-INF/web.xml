@@ -26,5 +26,14 @@
 		<servlet-name>RemoveUserServlet</servlet-name>
 		<url-pattern>/removeUser</url-pattern>
 	</servlet-mapping>
+			<servlet>
+		<servlet-name>AddBookServlet</servlet-name>
+		<servlet-class>librarymanagment.servlet.AddBookServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>AddBookServlet</servlet-name>
+		<url-pattern>/addBook</url-pattern>
+	</servlet-mapping>
 
 </web-app>
