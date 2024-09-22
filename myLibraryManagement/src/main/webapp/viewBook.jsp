@@ -7,14 +7,14 @@
 <html>
 <head>
     <title>View Books</title>
-    <link rel="stylesheet" type="text/css" href="styles/vieBook.css">
+    <link rel="stylesheet" type="text/css" href="styles/viewBook.css">
 </head>
 <body>
     <h1>Book List</h1>
 
     <%
-        ArrayList<Book> books = (ArrayList<Book>) request.getAttribute("books");
-        String error = (String) request.getAttribute("error");
+        ArrayList<Book> books = (ArrayList<Book>) session.getAttribute("books");
+        String error = (String) session.getAttribute("error");
 
         if (error != null) {
     %>
@@ -57,8 +57,3 @@
     <button id="backBtn" onclick="window.history.back()">Go Back</button>
 </body>
 </html>
-
-Make it Cleaner
-
-
-I want do the java operations in the above and html codes are in below neatly

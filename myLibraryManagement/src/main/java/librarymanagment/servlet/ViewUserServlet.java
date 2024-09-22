@@ -2,10 +2,12 @@ package librarymanagment.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import librarymanagment.dto.User;
 import librarymanagment.util.Repository;
@@ -16,15 +18,16 @@ public class ViewUserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
-
+		HttpSession session = request.getSession(false);
 		ArrayList<User> usersToShow = Repository.getInstance().getAllUsers();
+		System.out.println(usersToShow.toString());
 
 		if (usersToShow != null && !usersToShow.isEmpty()) {
-			request.setAttribute("users", usersToShow);
+			session.setAttribute("users", usersToShow);
 		} else {
-			request.setAttribute("error", "No users found.");
+			session.setAttribute("error", "No users found.");
 		}
 
-		request.getRequestDispatcher("viewUsers.jsp").forward(request, response);
+		request.getRequestDispatcher("viewUser.jsp").forward(request, response);
 	}
 }

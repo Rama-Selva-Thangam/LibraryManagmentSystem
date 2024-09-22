@@ -20,7 +20,6 @@ document.getElementById('submitBtn').addEventListener('click', async () => {
         });
 
         if (response.ok) {
-            console.log(response);
             const result = await response.json();
             responseMessage.textContent = result.message;
             document.getElementById('addBookForm').reset();

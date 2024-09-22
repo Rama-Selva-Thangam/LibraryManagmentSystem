@@ -1,6 +1,7 @@
 document.getElementById("submitBtn").addEventListener("click", async function () {
-    const userId = document.getElementById("bookId").value;
+    const bookId = document.getElementById("bookId").value;
     const messageElement = document.getElementById("message");
+    console.log(bookId);
 
     try {
         const response = await fetch("removeBook", {

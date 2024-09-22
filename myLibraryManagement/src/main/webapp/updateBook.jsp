@@ -29,6 +29,6 @@ pageEncoding="UTF-8"%>
 
       <p id="message"></p>
     </div>
-    <script src="js/changeBook.js"></script>
+    <script src="js/updateBook.js"></script>
   </body>
 </html>

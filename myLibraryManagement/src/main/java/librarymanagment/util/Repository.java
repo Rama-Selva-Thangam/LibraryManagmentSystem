@@ -140,10 +140,10 @@ public class Repository {
 		return false;
 	}
 
-	public boolean updateBook(String bookId, String stock) {
+	public boolean updateBook(String bookId, int stock) {
 		String query = "UPDATE books SET stock = ? WHERE book_id = ?";
 		try (PreparedStatement stmt = connection.prepareStatement(query)) {
-			stmt.setInt(1, Integer.parseInt(stock));
+			stmt.setInt(1, stock);
 			stmt.setString(2, bookId);
 			return stmt.executeUpdate() > 0;
 		} catch (SQLException e) {
@@ -177,6 +177,7 @@ public class Repository {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 
 		return bookList;
 	}
@@ -199,7 +200,7 @@ public class Repository {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		System.out.println(userList.toString());
 		return userList;
 	}
 

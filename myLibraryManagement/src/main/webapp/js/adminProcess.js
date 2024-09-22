@@ -52,14 +52,14 @@ document.getElementById('viewAllUsersBtn').addEventListener('click', async funct
         });
 
         if (!response.ok) {
-            throw new Error('Failed to fetch books');
+            throw new Error('Failed to fetch Users');
         }
-        window.location.href = "viewUsers.jsp";
+        window.location.href = "viewUser.jsp";
 
 
     } catch (error) {
         console.error('Error:', error);
-        alert('An error occurred while fetching books.');
+        alert('An error occurred while fetching Users.');
     }
 });
 document.getElementById('viewBooksIssued').addEventListener('click', function () {

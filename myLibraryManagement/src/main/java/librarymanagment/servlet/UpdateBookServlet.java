@@ -32,9 +32,10 @@ public class UpdateBookServlet extends HttpServlet {
 		} catch (Exception e) {
 			result.put("message", "Invalid JSON Format");
 			response.setStatus(HttpServletResponse.SC_CONFLICT);
+			return;
 		}
 		String bookId = (String) json.get("bookId");
-		String stock = (String) json.get("stock");
+		int stock = Integer.parseInt((String) json.get("stock"));
 		try {
 			boolean isUpdated = Repository.getInstance().updateBook(bookId, stock);
 			if (isUpdated) {

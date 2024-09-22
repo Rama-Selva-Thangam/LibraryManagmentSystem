@@ -2,6 +2,7 @@ document.getElementById("submitBtn").addEventListener("click", async function ()
     const bookId = document.getElementById("bookId").value;
     const stock = document.getElementById("stock").value;
     const messageElement = document.getElementById("message");
+    console.log(bookId+"  "+stock);
 
     try {
         const response = await fetch("updateBook", {

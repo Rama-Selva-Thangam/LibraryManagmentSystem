@@ -11,8 +11,8 @@
     <h1>User List</h1>
 
     <%
-        ArrayList<User> users = (ArrayList<User>) request.getAttribute("users");
-        String error = (String) request.getAttribute("error");
+        ArrayList<User> users = (ArrayList<User>) session.getAttribute("users");
+        String error = (String) session.getAttribute("error");
 
         if (error != null) {
     %>

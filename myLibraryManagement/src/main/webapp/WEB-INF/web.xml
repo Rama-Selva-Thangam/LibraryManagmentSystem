@@ -45,6 +45,15 @@
 		<url-pattern>/removeBook</url-pattern>
 	</servlet-mapping>
 	<servlet>
+		<servlet-name>UpdateBookServlet</servlet-name>
+		<servlet-class>librarymanagment.servlet.UpdateBookServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>UpdateBookServlet</servlet-name>
+		<url-pattern>/updateBook</url-pattern>
+	</servlet-mapping>
+	<servlet>
 		<servlet-name>ViewBookServlet</servlet-name>
 		<servlet-class>librarymanagment.servlet.ViewBookServlet</servlet-class>
 	</servlet>
