@@ -48,6 +48,6 @@ pageEncoding="UTF-8"%>
       <p id="responseMessage"></p>
      
     </div>
-    <script src="js/addNewBook.js"></script>
+    <script src="js/addBook.js"></script>
   </body>
 </html>

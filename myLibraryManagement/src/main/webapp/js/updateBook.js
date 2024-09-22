@@ -18,6 +18,7 @@ document.getElementById("submitBtn").addEventListener("click", async function ()
 
         if (!response.ok) {
             const errorResult = await response.json();
+            messageElement.textContent = errorResult.message;
             throw new Error(errorResult.message || "Network response was not ok.");
         }
 
