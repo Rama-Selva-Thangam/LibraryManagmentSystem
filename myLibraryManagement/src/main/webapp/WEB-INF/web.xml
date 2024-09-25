@@ -71,7 +71,7 @@
 		<servlet-name>ViewUserServlet</servlet-name>
 		<url-pattern>/viewUsers</url-pattern>
 	</servlet-mapping>
-		<servlet>
+	<servlet>
 		<servlet-name>LoginUserServlet</servlet-name>
 		<servlet-class>librarymanagment.userservlet.LoginUserServlet</servlet-class>
 	</servlet>
@@ -79,6 +79,24 @@
 	<servlet-mapping>
 		<servlet-name>LoginUserServlet</servlet-name>
 		<url-pattern>/userlogin</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>GetBooksServlet</servlet-name>
+		<servlet-class>librarymanagment.userservlet.GetBooksServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>GetBooksServlet</servlet-name>
+		<url-pattern>/getBooks</url-pattern>
+	</servlet-mapping>
+		<servlet>
+		<servlet-name>BorrowServlet</servlet-name>
+		<servlet-class>librarymanagment.userservlet.BorrowServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>BorrowServlet</servlet-name>
+		<url-pattern>/borrowBooks</url-pattern>
 	</servlet-mapping>
 
 </web-app>

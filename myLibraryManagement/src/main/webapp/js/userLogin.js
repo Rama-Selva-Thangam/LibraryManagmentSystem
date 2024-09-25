@@ -33,7 +33,6 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
             message.innterText = result.message || "Invalid User Credentials";
         }
     } catch (error) {
-        console.error('Error:', error);
         message.innterText = 'An error occurred during the login process';
     }
 });

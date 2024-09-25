@@ -38,48 +38,49 @@ public class LoginUserServlet extends HttpServlet {
 			jsonRequest = (JSONObject) parser.parse(sb.toString());
 		} catch (ParseException e) {
 			e.printStackTrace();
-			sendErrorResponse(response, "Invalid JSON format");
+			HashMap<String, String> res = new HashMap<>();
+			res.put("status", "error");
+			res.put("message", "Invalid date format.");
+			response.getWriter().write(new JSONObject(res).toJSONString());
 			return;
 		}
 
-		int userId;
+		String userId;
 		String passwordInput;
 
-		try {
-			userId = Integer.parseInt((String) jsonRequest.get("userName"));
-			passwordInput = (String) jsonRequest.get("password");
-		} catch (NumberFormatException | ClassCastException e) {
-			sendErrorResponse(response, "Invalid user ID or password format");
-			return;
-		}
-		String[] userDetail = Repository.getInstance().isUserExists(userId);
+		userId = (String) jsonRequest.get("userName");
+		passwordInput = (String) jsonRequest.get("password");
+		HashMap<String, String> jsonResponse = new HashMap<>();
+
+		String[] userDetail = Repository.getInstance().isUserExist(userId);
 
 		if (userDetail != null) {
 			String passwordStored = userDetail[1];
 			if (passwordStored.equals(passwordInput)) {
-				User user = Repository.getInstance().getUserById(userId);
-				HttpSession session = request.getSession(false);
+				int id = Integer.parseInt(userDetail[0]);
+				User user = Repository.getInstance().getUserById(id);
+				HttpSession session = request.getSession();
 				session.setAttribute("userLoggedIn", user);
 				Cookie userCookie = new Cookie("userLoogedIn", String.valueOf(userId));
 				userCookie.setMaxAge(30 * 60);
 				response.addCookie(userCookie);
 
-				HashMap<String, String> jsonResponse = new HashMap<>();
 				jsonResponse.put("success", "true");
 				jsonResponse.put("message", "Login successful");
+				response.setStatus(HttpServletResponse.SC_OK);
 				response.getWriter().write(new JSONObject(jsonResponse).toJSONString());
 			} else {
-				sendErrorResponse(response, "Invalid credentials");
+				response.setStatus(HttpServletResponse.SC_CONFLICT);
+				jsonResponse.put("success", "false");
+				jsonResponse.put("message", "Invalid Credentials");
+				response.getWriter().write(new JSONObject(jsonResponse).toJSONString());
 			}
 		} else {
-			sendErrorResponse(response, "User does not exist");
+			response.setStatus(HttpServletResponse.SC_CONFLICT);
+			jsonResponse.put("success", "false");
+			jsonResponse.put("message", "User Not Found");
+			response.getWriter().write(new JSONObject(jsonResponse).toJSONString());
 		}
 	}
 
-	private void sendErrorResponse(HttpServletResponse response, String errorMessage) throws IOException {
-		HashMap<String, String> errorResponse = new HashMap<>();
-		errorResponse.put("success", "false");
-		errorResponse.put("message", errorMessage);
-		response.getWriter().write(new JSONObject(errorResponse).toJSONString());
-	}
 }

@@ -11,12 +11,12 @@ pageEncoding="UTF-8"%>
   <body>
     <div id="container">
       <form id="userForm">
-        <label for="userName">USER ID :</label>
+        <label for="userName">USER EMAIL :</label>
         <input
-          type="text"
+          type="email"
           id="userName"
           name="userName"
-          placeholder="ENTER USER ID"
+          placeholder="ENTER USER EMAIL"
           required
         />
         <label for="password">PASSWORD :</label>

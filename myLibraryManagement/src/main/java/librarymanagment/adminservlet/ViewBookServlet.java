@@ -28,21 +28,31 @@ public class ViewBookServlet extends HttpServlet {
 		ArrayList<Book> booksToShow = new ArrayList<>();
 
 		HttpSession session = request.getSession(false);
+		if (session == null) {
+			response.sendRedirect("login.jsp");
+			return;
+		}
+
+		String targetPage = "viewBook.jsp";
+
 		try (BufferedReader reader = request.getReader()) {
 			JSONObject requestBody = (JSONObject) parser.parse(reader);
 			String filter = (String) requestBody.get("filter");
 
 			if ("all".equalsIgnoreCase(filter)) {
 				booksToShow = Repository.getInstance().getAllBooks();
-				session.setAttribute("books", booksToShow);
+				response.setStatus(HttpServletResponse.SC_OK);
 			} else {
-				session.setAttribute("error", "Invalid filter");
+				response.setStatus(HttpServletResponse.SC_CONFLICT);
 			}
+
+			session.setAttribute("books", booksToShow);
+
 		} catch (ParseException e) {
 			e.printStackTrace();
-			session.setAttribute("error", "Error parsing request");
+			session.setAttribute("error", "Error parsing request. Please try again.");
 		}
 
-		request.getRequestDispatcher("viewBook.jsp").forward(request, response);
+		request.getRequestDispatcher(targetPage).forward(request, response);
 	}
 }

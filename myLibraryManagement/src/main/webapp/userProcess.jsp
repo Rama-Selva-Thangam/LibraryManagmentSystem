@@ -1,9 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
-<%@ page session="true" %> 
-<% String username = (String) session.getAttribute("userLoggedIn").getUserName(); 
-  if (username == null) {
-      response.sendRedirect("userLogin.jsp"); return;
-     } 
+<%@ page session="true" %>
+<%@ page import="librarymanagment.dto.User" %>
+<% 
+  User user = (User) session.getAttribute("userLoggedIn"); 
+  
+  if (user == null || user.getUserName() == null) {
+      response.sendRedirect("userLogin.jsp"); 
+      return;
+  } 
+  
+  String username = user.getUserName();
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +25,6 @@
 
       <div class="button-container">
         <button id="borrowBook">Borrow a Book</button>
-        <button id="searchBook">Search for a Book</button>
         <button id="returnBook">Return a Book</button>
         <button id="viewBorrowedBooks">View Borrowed Books</button>
       </div>
@@ -28,6 +33,7 @@
         <button id="goBackBtn">Go Back</button>
       </div>
     </div>
+    
     <script src="js/userProcess.js"></script>
   </body>
 </html>

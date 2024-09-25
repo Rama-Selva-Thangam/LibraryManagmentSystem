@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 
 import librarymanagment.dto.Book;
 import librarymanagment.dto.User;
@@ -202,12 +203,12 @@ public class Repository {
 		return userList;
 	}
 
-	public String[] isUserExists(int userId) {
-		String query = "SELECT user_id, password FROM users WHERE user_id = ?";
+	public String[] isUserExist(String userId) {
+		String query = "SELECT user_id, password FROM users WHERE email = ?";
 		String[] userDetail = new String[2];
 
 		try (PreparedStatement pst = connection.prepareStatement(query)) {
-			pst.setInt(1, userId);
+			pst.setString(1, userId);
 			ResultSet rs = pst.executeQuery();
 
 			if (rs.next()) {
@@ -244,6 +245,87 @@ public class Repository {
 		}
 
 		return user;
+	}
+
+	public ArrayList<Book> getBooksByName(String filter) {
+		ArrayList<Book> books = new ArrayList<>();
+
+		String query = "SELECT * FROM books WHERE LOWER(book_name) LIKE LOWER(?)";
+
+		try (PreparedStatement stmt = connection.prepareStatement(query)) {
+
+			stmt.setString(1, "%" + filter + "%");
+
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Book book = new Book();
+				book.setBookId(rs.getString("book_id"));
+				book.setBookName(rs.getString("book_name"));
+				book.setAuthorName(rs.getString("author_name"));
+				book.setEdition(rs.getString("edition"));
+				book.setDateOfPublication(rs.getLong("date_of_publication"));
+				book.setStock(rs.getInt("stock"));
+				books.add(book);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return books;
+	}
+
+	public Book getBookById(String bookId) {
+		String query = "SELECT * FROM books WHERE book_id = ?";
+		Book book = null;
+		try (PreparedStatement stmt = connection.prepareStatement(query)) {
+			stmt.setString(1, bookId);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				book = new Book();
+				book.setBookId(rs.getString("book_id"));
+				book.setBookName(rs.getString("book_name"));
+				book.setAuthorName(rs.getString("author_name"));
+				book.setEdition(rs.getString("edition"));
+				book.setDateOfPublication(rs.getLong("date_of_publication"));
+				book.setStock(rs.getInt("stock"));
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return book;
+	}
+
+	public boolean updateBookStock(String bookId, int newStock) {
+		String query = "UPDATE books SET stock = ? WHERE book_id = ?";
+		try (PreparedStatement stmt = connection.prepareStatement(query)) {
+			stmt.setInt(1, newStock);
+			stmt.setString(2, bookId);
+			return stmt.executeUpdate() > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean recordBookTransaction(int userId, String bookId, long dateOfIssue) {
+		String query = "INSERT INTO books_given (user_id, book_id, date_of_issue, date_of_return, status) VALUES (?, ?, ?, ?, 'not returned')";
+		try (PreparedStatement stmt = connection.prepareStatement(query)) {
+			long fifteenDaysInMillis = 15L * 24 * 60 * 60 * 1000;
+			long dateOfReturn = dateOfIssue + fifteenDaysInMillis;
+
+			stmt.setInt(1, userId);
+			stmt.setString(2, bookId);
+			stmt.setLong(3, dateOfIssue); 
+			stmt.setLong(4, dateOfReturn);
+
+			return stmt.executeUpdate() > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 }
