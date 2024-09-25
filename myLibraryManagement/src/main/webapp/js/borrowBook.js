@@ -32,7 +32,7 @@ document.getElementById('submitBtn').addEventListener('click', async function ()
 function displayBooks(books) {
     const table = document.querySelector('#books-div table');
     table.innerHTML = '';
-    let message = document.getElementById("message");
+    const message = document.getElementById("message");
 
     if (books.length === 0) {
         const noBooksMessage = `
@@ -113,8 +113,14 @@ document.getElementById('backBtn').addEventListener('click', function () {
 
 function formatDate(dateString) {
     const date = new Date(dateString);
+
+    if (isNaN(date.getTime())) {
+        return 'Invalid date';
+    }
+
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
+
     return `${day}/${month}/${year}`;
 }
