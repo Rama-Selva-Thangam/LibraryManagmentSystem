@@ -25,12 +25,12 @@
 
       <div class="button-container">
         <button id="borrowBook">Borrow a Book</button>
-        <button id="returnBook">Return a Book</button>
         <button id="viewBorrowedBooks">View Borrowed Books</button>
       </div>
 
       <div class="go-back">
         <button id="goBackBtn">Go Back</button>
+        <button id="logoutBtn">LOGOUT</button>
       </div>
     </div>
     

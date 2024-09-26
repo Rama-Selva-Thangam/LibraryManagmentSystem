@@ -89,7 +89,7 @@
 		<servlet-name>GetBooksServlet</servlet-name>
 		<url-pattern>/getBooks</url-pattern>
 	</servlet-mapping>
-		<servlet>
+	<servlet>
 		<servlet-name>BorrowServlet</servlet-name>
 		<servlet-class>librarymanagment.userservlet.BorrowServlet</servlet-class>
 	</servlet>
@@ -97,6 +97,33 @@
 	<servlet-mapping>
 		<servlet-name>BorrowServlet</servlet-name>
 		<url-pattern>/borrowBooks</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>ViewBorrowBooksServlet</servlet-name>
+		<servlet-class>librarymanagment.userservlet.ViewBorrowBooksServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ViewBorrowBooksServlet</servlet-name>
+		<url-pattern>/viewBorrowBooks</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>ReturnBooksServlet</servlet-name>
+		<servlet-class>librarymanagment.userservlet.ReturnBooksServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ReturnBooksServlet</servlet-name>
+		<url-pattern>/returnBook</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>LogoutUserServlet</servlet-name>
+		<servlet-class>librarymanagment.userservlet.LogoutUserServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>LogoutUserServlet</servlet-name>
+		<url-pattern>/logoutUser</url-pattern>
 	</servlet-mapping>
 
 </web-app>

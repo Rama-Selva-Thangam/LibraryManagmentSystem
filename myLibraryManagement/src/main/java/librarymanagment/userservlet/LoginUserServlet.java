@@ -59,9 +59,9 @@ public class LoginUserServlet extends HttpServlet {
 			if (passwordStored.equals(passwordInput)) {
 				int id = Integer.parseInt(userDetail[0]);
 				User user = Repository.getInstance().getUserById(id);
-				HttpSession session = request.getSession();
+				HttpSession session = request.getSession(false);
 				session.setAttribute("userLoggedIn", user);
-				Cookie userCookie = new Cookie("userLoogedIn", String.valueOf(userId));
+				Cookie userCookie = new Cookie("userLoogedIn", String.valueOf(id));
 				userCookie.setMaxAge(30 * 60);
 				response.addCookie(userCookie);
 

@@ -96,6 +96,7 @@ function displayBooks(books) {
                 } else {
                     alert(result.message || 'Error borrowing the book.');
                 }
+                document.getElementById("message").textContent = result.message;
             } catch (error) {
                 console.error('Error:', error);
                 alert('An error occurred while borrowing the book: ' + error.message);
@@ -104,12 +105,7 @@ function displayBooks(books) {
     });
 
     document.getElementById('books-div').style.display = 'block';
-    message.textContent = result.message;
 }
-
-document.getElementById('backBtn').addEventListener('click', function () {
-    window.history.back();
-});
 
 function formatDate(dateString) {
     const date = new Date(dateString);
@@ -124,3 +120,7 @@ function formatDate(dateString) {
 
     return `${day}/${month}/${year}`;
 }
+
+document.getElementById('backBtn').addEventListener('click', function () {
+    window.history.back();
+});

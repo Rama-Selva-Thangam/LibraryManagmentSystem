@@ -10,7 +10,7 @@ pageEncoding="UTF-8"%>
   </head>
   <body>
     <div id="container">
-      <form id="adminForm" action="adminLogin"> 
+      <form id="adminForm" autocomplete="off"> 
         <label for="userName">ADMIN ID :</label>
         <input
           type="text"

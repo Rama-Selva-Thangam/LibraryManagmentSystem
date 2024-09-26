@@ -1,6 +1,5 @@
 package librarymanagment.dto;
 
-import java.util.Date;
 
 public class Book {
 	private String bookId;
@@ -9,6 +8,9 @@ public class Book {
 	private String edition;
 	private long dateOfPublication;
 	private int stock;
+	private long dateOfIssue;
+	private long dateOfReturn;
+	private String status;
 
 	public Book() {
 
@@ -71,10 +73,39 @@ public class Book {
 		this.stock = stock;
 	}
 
+
+	public long getDateOfIssue() {
+		return dateOfIssue;
+	}
+
+	public void setDateOfIssue(long dateOfIssue) {
+		this.dateOfIssue = dateOfIssue;
+	}
+
+	public long getDateOfReturn() {
+		return dateOfReturn;
+	}
+
+	public void setDateOfReturn(long dateOfReturn) {
+		this.dateOfReturn = dateOfReturn;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
 		return "Book{" + "bookId='" + bookId + '\'' + ", bookName='" + bookName + '\'' + ", authorName='" + authorName
 				+ '\'' + ", edition='" + edition + '\'' + ", dateOfPublication=" + dateOfPublication + ", stock="
 				+ stock + '}';
 	}
+
+
+
+	
 }

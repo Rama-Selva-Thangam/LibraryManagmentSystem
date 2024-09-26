@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 import librarymanagment.dto.Book;
 import librarymanagment.dto.User;
@@ -318,7 +318,7 @@ public class Repository {
 
 			stmt.setInt(1, userId);
 			stmt.setString(2, bookId);
-			stmt.setLong(3, dateOfIssue); 
+			stmt.setLong(3, dateOfIssue);
 			stmt.setLong(4, dateOfReturn);
 
 			return stmt.executeUpdate() > 0;
@@ -326,6 +326,48 @@ public class Repository {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	public List<Book> getBorrowedBooks(int userId) {
+		String query = "SELECT b.book_id, b.book_name, b.author_name, b.edition, b.date_of_publication, bg.date_of_issue, bg.date_of_return, bg.status "
+				+ "FROM books b " + "JOIN books_given bg ON b.book_id = bg.book_id " + "WHERE bg.user_id = ? "
+				+ "ORDER BY bg.status DESC, bg.date_of_issue ASC";
+
+		try (PreparedStatement statement = connection.prepareStatement(query)) {
+			statement.setInt(1, userId);
+			ResultSet rs = statement.executeQuery();
+			List<Book> borrowedBooks = new ArrayList<>();
+
+			while (rs.next()) {
+				Book book = new Book();
+				book.setBookId(rs.getString("book_id"));
+				book.setBookName(rs.getString("book_name"));
+				book.setAuthorName(rs.getString("author_name"));
+				book.setEdition(rs.getString("edition"));
+				book.setDateOfPublication(rs.getLong("date_of_publication"));
+				book.setDateOfIssue(rs.getLong("date_of_issue"));
+				book.setDateOfReturn(rs.getLong("date_of_return"));
+				book.setStatus(rs.getString("status"));
+				borrowedBooks.add(book);
+			}
+			return borrowedBooks;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public boolean returnBook(int userId, String bookId) throws SQLException {
+		String query = "UPDATE books_given SET date_of_return = ?, status = 'returned' "
+				+ "WHERE user_id = ? AND book_id = ? AND status = 'not returned'";
+
+		try (PreparedStatement statement = connection.prepareStatement(query)) {
+			statement.setLong(1, System.currentTimeMillis());
+			statement.setInt(2, userId);
+			statement.setString(3, bookId);
+			int updated = statement.executeUpdate();
+			return updated > 0;
+		}
 	}
 
 }
