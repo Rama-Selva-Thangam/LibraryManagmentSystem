@@ -8,9 +8,11 @@ public class Book {
 	private String edition;
 	private long dateOfPublication;
 	private int stock;
+	private long transaction_id;
 	private long dateOfIssue;
 	private long dateOfReturn;
 	private String status;
+	private String userName;
 
 	public Book() {
 
@@ -74,6 +76,14 @@ public class Book {
 	}
 
 
+	public long getTransaction_id() {
+		return transaction_id;
+	}
+
+	public void setTransaction_id(long transaction_id) {
+		this.transaction_id = transaction_id;
+	}
+
 	public long getDateOfIssue() {
 		return dateOfIssue;
 	}
@@ -97,7 +107,13 @@ public class Book {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	public String getUserName() {
+	    return userName;
+	}
 
+	public void setUserName(String userName) {
+	    this.userName = userName;
+	}
 	@Override
 	public String toString() {
 		return "Book{" + "bookId='" + bookId + '\'' + ", bookName='" + bookName + '\'' + ", authorName='" + authorName

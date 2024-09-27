@@ -72,6 +72,15 @@
 		<url-pattern>/viewUsers</url-pattern>
 	</servlet-mapping>
 	<servlet>
+		<servlet-name>ViewBooksIssuedServlet</servlet-name>
+		<servlet-class>librarymanagment.adminservlet.ViewBooksIssuedServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ViewBooksIssuedServlet</servlet-name>
+		<url-pattern>/viewBooksIssued</url-pattern>
+	</servlet-mapping>
+	<servlet>
 		<servlet-name>LoginUserServlet</servlet-name>
 		<servlet-class>librarymanagment.userservlet.LoginUserServlet</servlet-class>
 	</servlet>

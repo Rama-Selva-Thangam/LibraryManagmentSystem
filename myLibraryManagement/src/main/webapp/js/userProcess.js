@@ -1,13 +1,13 @@
 
-document.getElementById('borrowBook').addEventListener('click', function () {
-    location.href = 'borrowBook.jsp';
+document.getElementById('borrowBook').addEventListener('click', () => {
+    window.location.href = 'borrowBook.jsp';
 });
 
-document.getElementById('viewBorrowBooks').addEventListener('click', function () {
-    location.href = 'viewBorrowBooks.jsp';
+document.getElementById('viewBorrowBooks').addEventListener('click', () => {
+    window.location.href = 'viewBorrowBooks.jsp';
 });
 
-document.getElementById('logoutBtn').addEventListener('click', async function () {
+document.getElementById('logoutBtn').addEventListener('click', async () => {
     try {
         const response = await fetch('logoutUser', {
             method: 'POST',
@@ -24,6 +24,6 @@ document.getElementById('logoutBtn').addEventListener('click', async function ()
 });
 
 
-document.getElementById('goBackBtn').addEventListener('click', function () {
+document.getElementById('goBackBtn').addEventListener('click', () => {
     window.history.back();
 });

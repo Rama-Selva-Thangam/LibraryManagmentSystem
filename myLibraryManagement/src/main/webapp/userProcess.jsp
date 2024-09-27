@@ -25,7 +25,7 @@
 
       <div class="button-container">
         <button id="borrowBook">Borrow a Book</button>
-        <button id="viewBorrowedBooks">View Borrowed Books</button>
+        <button id="viewBorrowBooks">View Borrowed Books</button>
       </div>
 
       <div class="go-back">

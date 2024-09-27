@@ -61,22 +61,22 @@ function displayBooks(books) {
                 const response = await fetch('returnBook', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Content-Type': 'application/json',
                     },
-                    body: `bookId=${bookId}`
+                    body: JSON.stringify({ bookId: bookId })  
                 });
 
                 const result = await response.json();
                 if (response.ok) {
                     document.getElementById(`book-${bookId}`).querySelector('td:nth-child(6)').textContent = 'returned';
                     document.getElementById("message").textContent = result.message;
-                    this.remove();
+                    this.remove(); 
                 } else {
                     document.getElementById("message").textContent = result.message;
                 }
             } catch (error) {
                 console.error('Error returning book:', error);
-                document.getElementById("message").textContent = result.message;
+                document.getElementById("message").textContent = 'Error returning the book.';
             }
         });
     });

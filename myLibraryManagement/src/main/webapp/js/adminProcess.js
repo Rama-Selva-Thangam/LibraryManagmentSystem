@@ -62,8 +62,25 @@ document.getElementById('viewAllUsersBtn').addEventListener('click', async funct
         alert('An error occurred while fetching Users.');
     }
 });
-document.getElementById('viewBooksIssued').addEventListener('click', function () {
-    window.location.href = 'viewBooksIssued.jsp';
+document.getElementById('viewBooksIssued').addEventListener('click', async () => {
+    try {
+        const response = await fetch('viewBooksIssued', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch Users');
+        }
+        window.location.href = "viewBooksIssued.jsp";
+
+
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while fetching Users.');
+    }
 });
 document.getElementById('goBackBtn').addEventListener('click', function () {
     window.history.back();

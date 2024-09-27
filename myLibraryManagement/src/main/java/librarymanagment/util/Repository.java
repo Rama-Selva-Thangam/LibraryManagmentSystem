@@ -369,5 +369,35 @@ public class Repository {
 			return updated > 0;
 		}
 	}
+	public List<Book> getIssuedBooks() {
+	    List<Book> issuedBooks = new ArrayList<>();
+	    String sql = "SELECT bg.transaction_id, bg.user_id, bg.book_id, bg.date_of_issue, bg.date_of_return, bg.status, " +
+	                 "b.book_name, b.author_name, ud.user_name " +
+	                 "FROM books_given bg " +
+	                 "JOIN books b ON bg.book_id = b.book_id " +
+	                 "JOIN user_details ud ON bg.user_id = ud.user_id " +  
+	                 "ORDER BY CASE WHEN bg.status = 'not returned' THEN 0 ELSE 1 END, bg.date_of_return ASC"; 
+	    try (
+	         PreparedStatement ps = connection.prepareStatement(sql)) {
+	        ResultSet rs = ps.executeQuery();
+
+	        while (rs.next()) {
+	            Book book = new Book();
+	            book.setTransaction_id(rs.getLong("transaction_id"));
+	            book.setBookName(rs.getString("book_name"));
+	            book.setAuthorName(rs.getString("author_name"));
+	            book.setDateOfIssue(rs.getLong("date_of_issue"));
+	            book.setDateOfReturn(rs.getLong("date_of_return"));
+	            book.setStatus(rs.getString("status"));
+	            book.setUserName(rs.getString("user_name"));
+	            issuedBooks.add(book);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace(); 
+	    }
+
+	    return issuedBooks;
+	}
+
 
 }
