@@ -9,12 +9,13 @@ document.getElementById('viewBorrowBooks').addEventListener('click', () => {
 
 document.getElementById('logoutBtn').addEventListener('click', async () => {
     try {
-        const response = await fetch('logoutUser', {
+        const response = await fetch('/myLibraryManagement/user/logoutUser', {
             method: 'POST',
         });
 
         if (response.ok) {
-            window.location.href = 'index.jsp';
+            window.location.href = '/myLibraryManagement/index.jsp';
+
         } else {
             console.error('Failed to log out');
         }

@@ -88,6 +88,14 @@
 		<servlet-name>ViewBooksIssuedServlet</servlet-name>
 		<url-pattern>/admin/viewBooksIssued</url-pattern>
 	</servlet-mapping>
+		<servlet>
+		<servlet-name>LogoutAdminServlet</servlet-name>
+		<servlet-class>librarymanagment.adminservlet.LogoutAdminServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LogoutAdminServlet</servlet-name>
+		<url-pattern>/admin/logoutAdmin</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>LoginUserServlet</servlet-name>

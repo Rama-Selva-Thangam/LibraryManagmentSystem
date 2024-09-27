@@ -1,10 +1,10 @@
-package librarymanagment.userservlet;
+package librarymanagment.adminservlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.IOException;
 
-public class LogoutUserServlet extends HttpServlet {
+public class LogoutAdminServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -17,7 +17,7 @@ public class LogoutUserServlet extends HttpServlet {
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals("userLoggedIn")) {
+				if (cookie.getName().equals("adminLoggedIn")) {
 					cookie.setMaxAge(0);
 					response.addCookie(cookie);
 					break;

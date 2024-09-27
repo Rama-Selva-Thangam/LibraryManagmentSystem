@@ -84,12 +84,12 @@ document.getElementById('viewBooksIssued').addEventListener('click', async () =>
 });
 document.getElementById('logoutBtn').addEventListener('click', async () => {
     try {
-        const response = await fetch('/myLibraryManagement/user/logoutUser', {
+        const response = await fetch('/myLibraryManagement/admin/logoutAdmin', {
             method: 'POST',
         });
 
         if (response.ok) {
-            window.location.href = 'index.jsp';
+            window.location.href = 'myLibraryManagement/index.jsp';
         } else {
             console.error('Failed to log out');
         }

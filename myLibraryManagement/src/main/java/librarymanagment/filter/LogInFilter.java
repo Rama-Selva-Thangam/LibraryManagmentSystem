@@ -61,7 +61,7 @@ public class LogInFilter implements Filter {
             httpResponse.sendRedirect(httpRequest.getContextPath() + "/index.jsp");
             return;
         } else if (isUserLoggedIn && requestURI.contains("admin")) {
-            httpResponse.sendRedirect(httpRequest.getContextPath() + "/userProcess.jsp");
+            httpResponse.sendRedirect(httpRequest.getContextPath() + "/user/userProcess.jsp");
             return;
         }
 
