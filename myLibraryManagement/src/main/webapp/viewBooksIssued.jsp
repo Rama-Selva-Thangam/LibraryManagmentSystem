@@ -33,13 +33,15 @@
                 
                 if (issuedBooks != null && !issuedBooks.isEmpty()) {
                     for (Book book : issuedBooks) {
-                        String formattedIssueDate = sdf.format(book.getDateOfIssue());
-                        String formattedReturnDate = (book.getDateOfReturn() != null) 
-                                                      ? sdf.format(book.getDateOfReturn()) 
+                        String formattedIssueDate = sdf.format(new java.util.Date(book.getDateOfIssue()));
+
+                        // Updated date of return check and formatting
+                        String formattedReturnDate = (book.getDateOfReturn() > 0) 
+                                                      ? sdf.format(new java.util.Date(book.getDateOfReturn())) 
                                                       : "Not returned";
             %>
                         <tr>
-                            <td><%= book.getTransactionId() %></td>
+                            <td><%= book.getTransaction_id() %></td>
                             <td><%= book.getUserName() %></td>
                             <td><%= book.getBookName() %></td>
                             <td><%= book.getAuthorName() %></td>
