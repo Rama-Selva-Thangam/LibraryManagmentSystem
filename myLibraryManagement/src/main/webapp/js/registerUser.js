@@ -41,7 +41,7 @@ document.getElementById("submitBtn").addEventListener("click", async function ()
     };
 
     try {
-        const response = await fetch("registerUser", {
+        const response = await fetch("/myLibraryManagement/admin/registerUser", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

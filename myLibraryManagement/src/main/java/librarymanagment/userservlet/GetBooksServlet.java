@@ -2,8 +2,7 @@ package librarymanagment.userservlet;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -39,7 +38,7 @@ public class GetBooksServlet extends HttpServlet {
 		try (BufferedReader reader = request.getReader()) {
 			JSONObject requestBody = (JSONObject) parser.parse(reader);
 			String filter = (String) requestBody.get("filter");
-			ArrayList<Book> books = Repository.getInstance().getBooksByName(filter);
+			List<Book> books = Repository.getInstance().getBooksByName(filter);
 
 			if (books != null) {
 				for (Book book : books) {

@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Books Issued</title>
-    <link rel="stylesheet" href="styles/viewBook.css">
+    <link rel="stylesheet" href="../styles/viewBook.css">
 </head>
 <body>
 
@@ -63,6 +63,6 @@
     </table>
 
     <p id="message"></p>
-    <script src="js/adminProcess.js"></script>
+    <script src="../js/adminProcess.js"></script>
 </body>
 </html>

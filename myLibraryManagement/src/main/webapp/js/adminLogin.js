@@ -1,17 +1,34 @@
-document.getElementById("submitBtn").addEventListener("click", () => {
-    let adminName = "admin@123";
-    let passwordValue = "admin";
-    let admin = document.getElementById("userName").value.trim();
-    let password = document.getElementById("password").value.trim();
+document.getElementById("submitBtn").addEventListener("click", async () => {
+    const adminName = document.getElementById("userName").value.trim();
+    const password = document.getElementById("password").value.trim();
 
-    if (admin != adminName || password != passwordValue) {
-        alert("Invalid Admin Credentials");
-        return;
+    const adminLoginData = {
+        userName: adminName,
+        password: password
+    };
+
+    try {
+        const response = await fetch('/myLibraryManagement/admin/adminLogIn', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams(adminLoginData),
+        });
+
+        const data = await response.json();
+        if (data.success === "true") {
+            alert(data.message);
+            window.location.href = "adminProcess.jsp"; 
+        } else {
+            alert(data.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert("An error occurred. Please try again.");
     }
-    document.getElementById("adminForm").reset();
-
-    window.location.href = "adminProcess.jsp";
 });
+
 
 document.getElementById("backBtn").addEventListener("click", () => {
     window.history.back();

@@ -5,16 +5,16 @@ pageEncoding="UTF-8"%>
   <head>
     <meta charset="UTF-8" />
     <title>Remove User</title>
-    <link rel="stylesheet" href="styles/register.css" />
+    <link rel="stylesheet" href="../styles/register.css" />
   </head>
   <body>
     <div class="form-container">
-      <h2>Remove Book</h2>
+      <h2>Remove User</h2>
 
-      <form id="removeBookForm">
+      <form id="removeUserForm">
         <div class="form-group">
-          <label for="bookId">Enter Book ID to Remove :</label>
-          <input type="text" id="bookId" name="bookId" required />
+          <label for="userId">Enter User ID to Remove :</label>
+          <input type="number" id="userId" name="userId" required />
         </div>
 
         <div class="submit-btn">
@@ -25,6 +25,6 @@ pageEncoding="UTF-8"%>
 
       <p id="message"></p>
     </div>
-    <script src="js/removeBook.js"></script>
+    <script src="../js/removeUser.js"></script>
   </body>
 </html>

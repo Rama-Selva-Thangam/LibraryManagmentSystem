@@ -23,6 +23,6 @@ public class ViewBooksIssuedServlet extends HttpServlet {
             session = request.getSession(true);
         }
         session.setAttribute("issuedBooks", issuedBooks);
-        request.getRequestDispatcher("viewBooksIssued.jsp").forward(request, response);
+        request.getRequestDispatcher("/admin/viewBooksIssued.jsp").forward(request, response);
     }
 }

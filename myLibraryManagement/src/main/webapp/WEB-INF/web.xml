@@ -5,134 +5,142 @@
 	id="WebApp_ID" version="4.0">
 
 	<display-name>myLibraryManagement</display-name>
+
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
+		<servlet>
+		<servlet-name>AdminLogInServlet</servlet-name>
+		<servlet-class>librarymanagment.adminservlet.AdminLogInServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdminLogInServlet</servlet-name>
+		<url-pattern>/admin/adminLogIn</url-pattern>
+	</servlet-mapping>
 	<servlet>
 		<servlet-name>RegisterServlet</servlet-name>
 		<servlet-class>librarymanagment.adminservlet.RegisterServlet</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>RegisterServlet</servlet-name>
-		<url-pattern>/registerUser</url-pattern>
+		<url-pattern>/admin/registerUser</url-pattern>
 	</servlet-mapping>
+
 	<servlet>
 		<servlet-name>RemoveUserServlet</servlet-name>
 		<servlet-class>librarymanagment.adminservlet.RemoveUserServlet</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>RemoveUserServlet</servlet-name>
-		<url-pattern>/removeUser</url-pattern>
+		<url-pattern>/admin/removeUser</url-pattern>
 	</servlet-mapping>
+
 	<servlet>
 		<servlet-name>AddBookServlet</servlet-name>
 		<servlet-class>librarymanagment.adminservlet.AddBookServlet</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>AddBookServlet</servlet-name>
-		<url-pattern>/addBook</url-pattern>
+		<url-pattern>/admin/addBook</url-pattern>
 	</servlet-mapping>
+
 	<servlet>
 		<servlet-name>RemoveBookServlet</servlet-name>
 		<servlet-class>librarymanagment.adminservlet.RemoveBookServlet</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>RemoveBookServlet</servlet-name>
-		<url-pattern>/removeBook</url-pattern>
+		<url-pattern>/admin/removeBook</url-pattern>
 	</servlet-mapping>
+
 	<servlet>
 		<servlet-name>UpdateBookServlet</servlet-name>
 		<servlet-class>librarymanagment.adminservlet.UpdateBookServlet</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>UpdateBookServlet</servlet-name>
-		<url-pattern>/updateBook</url-pattern>
+		<url-pattern>/admin/updateBook</url-pattern>
 	</servlet-mapping>
+
 	<servlet>
 		<servlet-name>ViewBookServlet</servlet-name>
 		<servlet-class>librarymanagment.adminservlet.ViewBookServlet</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>ViewBookServlet</servlet-name>
-		<url-pattern>/viewBooks</url-pattern>
+		<url-pattern>/admin/viewBooks</url-pattern>
 	</servlet-mapping>
+
 	<servlet>
 		<servlet-name>ViewUserServlet</servlet-name>
 		<servlet-class>librarymanagment.adminservlet.ViewUserServlet</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>ViewUserServlet</servlet-name>
-		<url-pattern>/viewUsers</url-pattern>
+		<url-pattern>/admin/viewUsers</url-pattern>
 	</servlet-mapping>
+
 	<servlet>
 		<servlet-name>ViewBooksIssuedServlet</servlet-name>
 		<servlet-class>librarymanagment.adminservlet.ViewBooksIssuedServlet</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>ViewBooksIssuedServlet</servlet-name>
-		<url-pattern>/viewBooksIssued</url-pattern>
+		<url-pattern>/admin/viewBooksIssued</url-pattern>
 	</servlet-mapping>
+
 	<servlet>
 		<servlet-name>LoginUserServlet</servlet-name>
 		<servlet-class>librarymanagment.userservlet.LoginUserServlet</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>LoginUserServlet</servlet-name>
-		<url-pattern>/userlogin</url-pattern>
+		<url-pattern>/user/userlogin</url-pattern>
 	</servlet-mapping>
+
 	<servlet>
 		<servlet-name>GetBooksServlet</servlet-name>
 		<servlet-class>librarymanagment.userservlet.GetBooksServlet</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>GetBooksServlet</servlet-name>
-		<url-pattern>/getBooks</url-pattern>
+		<url-pattern>/user/getBooks</url-pattern>
 	</servlet-mapping>
+
 	<servlet>
 		<servlet-name>BorrowServlet</servlet-name>
 		<servlet-class>librarymanagment.userservlet.BorrowServlet</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>BorrowServlet</servlet-name>
-		<url-pattern>/borrowBooks</url-pattern>
+		<url-pattern>/user/borrowBooks</url-pattern>
 	</servlet-mapping>
+
 	<servlet>
 		<servlet-name>ViewBorrowBooksServlet</servlet-name>
 		<servlet-class>librarymanagment.userservlet.ViewBorrowBooksServlet</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>ViewBorrowBooksServlet</servlet-name>
-		<url-pattern>/viewBorrowBooks</url-pattern>
+		<url-pattern>/user/viewBorrowBooks</url-pattern>
 	</servlet-mapping>
+
 	<servlet>
 		<servlet-name>ReturnBookServlet</servlet-name>
 		<servlet-class>librarymanagment.userservlet.ReturnBookServlet</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>ReturnBookServlet</servlet-name>
-		<url-pattern>/returnBook</url-pattern>
+		<url-pattern>/user/returnBook</url-pattern>
 	</servlet-mapping>
+
 	<servlet>
 		<servlet-name>LogoutUserServlet</servlet-name>
 		<servlet-class>librarymanagment.userservlet.LogoutUserServlet</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>LogoutUserServlet</servlet-name>
-		<url-pattern>/logoutUser</url-pattern>
+		<url-pattern>/user/logoutUser</url-pattern>
 	</servlet-mapping>
 
 </web-app>

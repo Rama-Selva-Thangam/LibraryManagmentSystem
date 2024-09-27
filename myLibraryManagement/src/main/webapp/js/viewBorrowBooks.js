@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', async function () {
     try {
-        const response = await fetch('viewBorrowBooks', {
+        const response = await fetch('/myLibraryManagement/user/viewBorrowBooks', {
             method: 'POST',
         });
 
@@ -58,19 +58,19 @@ function displayBooks(books) {
         button.addEventListener('click', async function () {
             const bookId = this.getAttribute('data-book-id');
             try {
-                const response = await fetch('returnBook', {
+                const response = await fetch('/myLibraryManagement/user/returnBook', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ bookId: bookId })  
+                    body: JSON.stringify({ bookId: bookId })
                 });
 
                 const result = await response.json();
                 if (response.ok) {
                     document.getElementById(`book-${bookId}`).querySelector('td:nth-child(6)').textContent = 'returned';
                     document.getElementById("message").textContent = result.message;
-                    this.remove(); 
+                    this.remove();
                 } else {
                     document.getElementById("message").textContent = result.message;
                 }
@@ -81,3 +81,6 @@ function displayBooks(books) {
         });
     });
 }
+document.getElementById("backBtn").addEventListener("click", () => {
+    window.history.back();
+});

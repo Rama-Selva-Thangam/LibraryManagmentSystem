@@ -28,7 +28,7 @@ document.getElementById("submitBtn").addEventListener("click", async function ()
     }
 
     try {
-        const response = await fetch("updateBook", {
+        const response = await fetch("/myLibraryManagement/admin/updateBook", {
             method: "PUT",
             headers: {
                 "Accept": "application/json",

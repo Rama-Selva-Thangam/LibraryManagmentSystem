@@ -5,7 +5,7 @@ pageEncoding="UTF-8"%>
 <head>
     <meta charset="UTF-8" />
     <title>Register User</title>
-    <link rel="stylesheet" href="styles/register.css" />
+    <link rel="stylesheet" href="../styles/register.css" />
 </head>
 <body>
     <div class="form-container">
@@ -54,6 +54,6 @@ pageEncoding="UTF-8"%>
         <p id="message"></p>
     </div>
 
-    <script src="js/registerUser.js"></script>
+    <script src="../js/registerUser.js"></script>
 </body>
 </html>

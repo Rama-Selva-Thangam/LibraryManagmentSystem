@@ -52,7 +52,7 @@ document.getElementById('submitBtn').addEventListener('click', async () => {
     }
 
     try {
-        const response = await fetch('addBook', {
+        const response = await fetch('/myLibraryManagement/admin/addBook', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

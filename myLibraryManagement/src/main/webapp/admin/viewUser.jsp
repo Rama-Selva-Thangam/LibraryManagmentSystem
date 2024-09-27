@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>User List</title>
-    <link rel="stylesheet" type="text/css" href="styles/viewBook.css">
+    <link rel="stylesheet" type="text/css" href="../styles/viewBook.css">
 </head>
 <body>
     <h1>User List</h1>

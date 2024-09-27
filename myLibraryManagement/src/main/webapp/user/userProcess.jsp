@@ -17,7 +17,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Welcome - <%= username %></title>
-    <link rel="stylesheet" href="styles/process.css" />
+    <link rel="stylesheet" href="../styles/process.css" />
   </head>
   <body>
     <div id="container">
@@ -34,6 +34,6 @@
       </div>
     </div>
     
-    <script src="js/userProcess.js"></script>
+    <script src="../js/userProcess.js"></script>
   </body>
 </html>

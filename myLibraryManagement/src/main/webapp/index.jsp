@@ -22,8 +22,8 @@
     <h1><%= welcome %></h1>
 
     <div class="button-container">
-      <button onclick="window.location.href='adminLogin.jsp'">Admin Login</button>
-      <button onclick="window.location.href='userLogin.jsp'">User Login</button>
+      <button onclick="window.location.href='admin/adminLogin.jsp'">Admin Login</button>
+      <button onclick="window.location.href='user/userLogin.jsp'">User Login</button>
     </div>
   </body>
 </html>

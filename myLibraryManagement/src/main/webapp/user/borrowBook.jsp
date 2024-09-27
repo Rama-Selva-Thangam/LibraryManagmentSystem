@@ -17,7 +17,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Books - <%= username %></title>
-    <link rel="stylesheet" href="styles/borrowBook.css">
+    <link rel="stylesheet" href="../styles/borrowBook.css">
 </head>
 <body>
     <div id="container">
@@ -35,6 +35,6 @@
         <p id="message"></p>
         <button id="backBtn" type="button">BACK BUTTON</button>
     </div> 
-    <script src="js/borrowBook.js"></script>
+    <script src="../js/borrowBook.js"></script>
 </body>
 </html>

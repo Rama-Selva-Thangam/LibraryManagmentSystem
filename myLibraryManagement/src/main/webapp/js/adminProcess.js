@@ -21,7 +21,7 @@ document.getElementById('updateBookBtn').addEventListener('click', function () {
 
 document.getElementById('viewAllBooksBtn').addEventListener('click', async function () {
     try {
-        const response = await fetch('viewBooks', {
+        const response = await fetch('/myLibraryManagement/admin/viewBooks', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ document.getElementById('viewAllBooksBtn').addEventListener('click', async funct
 
 document.getElementById('viewAllUsersBtn').addEventListener('click', async function () {
     try {
-        const response = await fetch('viewUsers', {
+        const response = await fetch('/myLibraryManagement/admin/viewUsers', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ document.getElementById('viewAllUsersBtn').addEventListener('click', async funct
 });
 document.getElementById('viewBooksIssued').addEventListener('click', async () => {
     try {
-        const response = await fetch('viewBooksIssued', {
+        const response = await fetch('/myLibraryManagement/admin/viewBooksIssued', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -80,6 +80,21 @@ document.getElementById('viewBooksIssued').addEventListener('click', async () =>
     } catch (error) {
         console.error('Error:', error);
         alert('An error occurred while fetching Users.');
+    }
+});
+document.getElementById('logoutBtn').addEventListener('click', async () => {
+    try {
+        const response = await fetch('/myLibraryManagement/user/logoutUser', {
+            method: 'POST',
+        });
+
+        if (response.ok) {
+            window.location.href = 'index.jsp';
+        } else {
+            console.error('Failed to log out');
+        }
+    } catch (error) {
+        console.error('Error during logout:', error);
     }
 });
 document.getElementById('goBackBtn').addEventListener('click', function () {

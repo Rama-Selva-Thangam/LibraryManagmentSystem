@@ -45,23 +45,23 @@ public class LoginUserServlet extends HttpServlet {
 			return;
 		}
 
-		String userId;
+		String email;
 		String passwordInput;
 
-		userId = (String) jsonRequest.get("userName");
+		email = (String) jsonRequest.get("userName");
 		passwordInput = (String) jsonRequest.get("password");
 		HashMap<String, String> jsonResponse = new HashMap<>();
 
-		String[] userDetail = Repository.getInstance().isUserExist(userId);
+		String[] userDetail = Repository.getInstance().isUserExist(email);
 
 		if (userDetail != null) {
 			String passwordStored = userDetail[1];
 			if (passwordStored.equals(passwordInput)) {
 				int id = Integer.parseInt(userDetail[0]);
 				User user = Repository.getInstance().getUserById(id);
-				HttpSession session = request.getSession(false);
+				HttpSession session = request.getSession(true);
 				session.setAttribute("userLoggedIn", user);
-				Cookie userCookie = new Cookie("userLoogedIn", String.valueOf(id));
+				Cookie userCookie = new Cookie("userLoggedIn", String.valueOf(id));
 				userCookie.setMaxAge(30 * 60);
 				response.addCookie(userCookie);
 

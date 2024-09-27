@@ -5,7 +5,7 @@ pageEncoding="UTF-8"%>
   <head>
     <meta charset="UTF-8" />
     <title>Update Book</title>
-    <link rel="stylesheet" href="styles/register.css" />
+    <link rel="stylesheet" href="../styles/register.css" />
   </head>
   <body>
     <div class="form-container">
@@ -29,6 +29,6 @@ pageEncoding="UTF-8"%>
 
       <p id="message"></p>
     </div>
-    <script src="js/updateBook.js"></script>
+    <script src="../js/updateBook.js"></script>
   </body>
 </html>

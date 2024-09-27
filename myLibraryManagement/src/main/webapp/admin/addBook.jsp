@@ -5,7 +5,7 @@ pageEncoding="UTF-8"%>
   <head>
     <meta charset="UTF-8" />
     <title>Add New Book</title>
-    <link rel="stylesheet" type="text/css" href="styles/addBook.css" />
+    <link rel="stylesheet" type="text/css" href="../styles/addBook.css" />
   </head>
   <body>
     <div class="form-container">
@@ -48,6 +48,6 @@ pageEncoding="UTF-8"%>
       <p id="message"></p>
      
     </div>
-    <script src="js/addBook.js"></script>
+    <script src="../js/addBook.js"></script>
   </body>
 </html>

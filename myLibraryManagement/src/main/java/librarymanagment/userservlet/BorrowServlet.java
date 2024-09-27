@@ -45,28 +45,45 @@ public class BorrowServlet extends HttpServlet {
         String bookId = (String) jsonRequest.get("bookId");
         User user = (User) session.getAttribute("userLoggedIn");
 
-        Book book = Repository.getInstance().getBookById(bookId);
+        if (user == null) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            HashMap<String, String> res = new HashMap<>();
+            res.put("success", "false");
+            res.put("message", "User not logged in.");
+            response.getWriter().write(new JSONObject(res).toJSONString());
+            return;
+        }
+
+        int borrowedBooksCount = Repository.getInstance().getBorrowedBooksCount(user.getUserId());
 
         HashMap<String, String> jsonResponse = new HashMap<>();
-        if (book != null && book.getStock() > 0) {
-            Repository.getInstance().updateBookStock(bookId, book.getStock() - 1);
+        if (borrowedBooksCount < 2) {
+            Book book = Repository.getInstance().getBookById(bookId);
 
-            long dateOfIssue = System.currentTimeMillis();
-            boolean transactionRecorded = Repository.getInstance().recordBookTransaction(user.getUserId(), bookId, dateOfIssue);
+            if (book != null && book.getStock() > 0) {
+                Repository.getInstance().updateBookStock(bookId, book.getStock() - 1);
 
-            if (transactionRecorded) {
-                jsonResponse.put("success", "true");
-                jsonResponse.put("message", "Book borrowed successfully!");
-                response.setStatus(HttpServletResponse.SC_OK);
+                long dateOfIssue = System.currentTimeMillis();
+                boolean transactionRecorded = Repository.getInstance().recordBookTransaction(user.getUserId(), bookId, dateOfIssue);
+
+                if (transactionRecorded) {
+                    jsonResponse.put("success", "true");
+                    jsonResponse.put("message", "Book borrowed successfully!");
+                    response.setStatus(HttpServletResponse.SC_OK);
+                } else {
+                    jsonResponse.put("success", "false");
+                    jsonResponse.put("message", "Failed to record the transaction.");
+                    response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                }
             } else {
+                response.setStatus(HttpServletResponse.SC_CONFLICT);
                 jsonResponse.put("success", "false");
-                jsonResponse.put("message", "Failed to record the transaction.");
-                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                jsonResponse.put("message", book == null ? "Book not found." : "Book out of stock.");
             }
         } else {
-            response.setStatus(HttpServletResponse.SC_CONFLICT);
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             jsonResponse.put("success", "false");
-            jsonResponse.put("message", book == null ? "Book not found." : "Book out of stock.");
+            jsonResponse.put("message", "Cannot borrow more than 2 books at a time.");
         }
 
         response.getWriter().write(new JSONObject(jsonResponse).toJSONString());

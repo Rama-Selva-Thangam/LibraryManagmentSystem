@@ -1,7 +1,7 @@
 package librarymanagment.adminservlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +19,7 @@ public class ViewUserServlet extends HttpServlet {
 			throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession(false);
-		ArrayList<User> usersToShow = Repository.getInstance().getAllUsers();
+		List<User> usersToShow = Repository.getInstance().getAllUsers();
 		
 
 		if (usersToShow != null && !usersToShow.isEmpty()) {
@@ -28,6 +28,6 @@ public class ViewUserServlet extends HttpServlet {
 			session.setAttribute("error", "No users found.");
 		}
 
-		request.getRequestDispatcher("viewUser.jsp").forward(request, response);
+		request.getRequestDispatcher("/admin/viewUser.jsp").forward(request, response);
 	}
 }

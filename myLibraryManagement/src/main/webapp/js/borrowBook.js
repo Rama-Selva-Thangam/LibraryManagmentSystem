@@ -7,7 +7,7 @@ document.getElementById('submitBtn').addEventListener('click', async function ()
     }
 
     try {
-        const response = await fetch('getBooks', {
+        const response = await fetch('/myLibraryManagement/user/getBooks', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ function displayBooks(books) {
             const bookId = this.getAttribute('data-book-id');
 
             try {
-                const response = await fetch('borrowBooks', {
+                const response = await fetch('/myLibraryManagement/user/borrowBooks', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

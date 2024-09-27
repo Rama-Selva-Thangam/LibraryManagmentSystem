@@ -3,6 +3,7 @@ package librarymanagment.adminservlet;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -25,15 +26,15 @@ public class ViewBookServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 
 		JSONParser parser = new JSONParser();
-		ArrayList<Book> booksToShow = new ArrayList<>();
+		List<Book> booksToShow = new ArrayList<>();
 
 		HttpSession session = request.getSession(false);
 		if (session == null) {
-			response.sendRedirect("login.jsp");
+			response.sendRedirect("index.jsp");
 			return;
 		}
 
-		String targetPage = "viewBook.jsp";
+		String targetPage = "/admin/viewBook.jsp";
 
 		try (BufferedReader reader = request.getReader()) {
 			JSONObject requestBody = (JSONObject) parser.parse(reader);

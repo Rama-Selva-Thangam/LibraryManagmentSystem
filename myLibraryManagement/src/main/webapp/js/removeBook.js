@@ -3,7 +3,7 @@ document.getElementById("submitBtn").addEventListener("click", async function ()
     const messageElement = document.getElementById("message");
 
     try {
-        const response = await fetch("removeBook", {
+        const response = await fetch("/myLibraryManagement/admin/removeBook", {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
