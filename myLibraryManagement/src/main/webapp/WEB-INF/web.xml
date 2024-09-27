@@ -117,12 +117,12 @@
 		<url-pattern>/viewBorrowBooks</url-pattern>
 	</servlet-mapping>
 	<servlet>
-		<servlet-name>ReturnBooksServlet</servlet-name>
-		<servlet-class>librarymanagment.userservlet.ReturnBooksServlet</servlet-class>
+		<servlet-name>ReturnBookServlet</servlet-name>
+		<servlet-class>librarymanagment.userservlet.ReturnBookServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>ReturnBooksServlet</servlet-name>
+		<servlet-name>ReturnBookServlet</servlet-name>
 		<url-pattern>/returnBook</url-pattern>
 	</servlet-mapping>
 	<servlet>

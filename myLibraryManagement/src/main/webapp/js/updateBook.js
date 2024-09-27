@@ -1,8 +1,31 @@
 document.getElementById("submitBtn").addEventListener("click", async function () {
-    const bookId = document.getElementById("bookId").value;
-    const stock = document.getElementById("stock").value;
+    const bookId = document.getElementById("bookId").value.trim();
+    const stock = document.getElementById("stock").value.trim();
     const messageElement = document.getElementById("message");
-    console.log(bookId+"  "+stock);
+
+    messageElement.textContent = "";
+
+    if (!bookId) {
+        messageElement.textContent = "Book ID cannot be empty.";
+        return;
+    }
+
+    const idPattern = /^[a-zA-Z0-9_]+$/; 
+    if (!idPattern.test(bookId)) {
+        messageElement.textContent = "Book ID must contain only alphanumeric characters and underscores.";
+        return;
+    }
+
+    if (!stock) {
+        messageElement.textContent = "Stock cannot be empty.";
+        return;
+    }
+
+    const stockNumber = parseInt(stock, 10);
+    if (isNaN(stockNumber) || stockNumber < 0) {
+        messageElement.textContent = "Stock must be a non-negative number.";
+        return;
+    }
 
     try {
         const response = await fetch("updateBook", {
@@ -13,7 +36,7 @@ document.getElementById("submitBtn").addEventListener("click", async function ()
             },
             body: JSON.stringify({
                 bookId: bookId,
-                stock: stock
+                stock: stockNumber 
             })
         });
 
@@ -24,6 +47,7 @@ document.getElementById("submitBtn").addEventListener("click", async function ()
         }
 
         const result = await response.json();
+        document.getElementById("updateBookForm").reset();
         alert(result.message);
     } catch (error) {
         messageElement.textContent = "An error occurred: " + error.message;

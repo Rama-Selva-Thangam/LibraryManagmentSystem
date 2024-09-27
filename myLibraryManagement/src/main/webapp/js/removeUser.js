@@ -1,5 +1,5 @@
 document.getElementById("submitBtn").addEventListener("click", async function () {
-    const userId = document.getElementById("userId").value;
+    const userId = document.getElementById("userId").value.trim();
     const messageElement = document.getElementById("message");
 
     try {
@@ -18,6 +18,7 @@ document.getElementById("submitBtn").addEventListener("click", async function ()
         }
 
         const result = await response.json();
+        document.getElementById("removeUserForm").reset();
         alert(result.message);
     } catch (error) {
         messageElement.textContent = "An error occurred: " + error.message;

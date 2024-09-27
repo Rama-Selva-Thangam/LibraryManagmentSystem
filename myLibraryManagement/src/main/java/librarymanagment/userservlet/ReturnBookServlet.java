@@ -29,7 +29,6 @@ public class ReturnBookServlet extends HttpServlet {
 			return;
 		}
 
-		// Using StringBuilder to read the JSON body
 		StringBuilder jsonString = new StringBuilder();
 		try (BufferedReader reader = request.getReader()) {
 			String line;
@@ -38,7 +37,6 @@ public class ReturnBookServlet extends HttpServlet {
 			}
 		}
 
-		// Parsing the JSON body
 		JSONObject requestBody = (JSONObject) JSONValue.parse(jsonString.toString());
 		String bookId = (String) requestBody.get("bookId");
 

@@ -1,7 +1,6 @@
 document.getElementById("submitBtn").addEventListener("click", async function () {
-    const bookId = document.getElementById("bookId").value;
+    const bookId = document.getElementById("bookId").value.trim();
     const messageElement = document.getElementById("message");
-    console.log(bookId);
 
     try {
         const response = await fetch("removeBook", {
@@ -19,6 +18,7 @@ document.getElementById("submitBtn").addEventListener("click", async function ()
         }
 
         const result = await response.json();
+        document.getElementById("removeBookForm").reset();
         alert(result.message);
     } catch (error) {
         messageElement.textContent = "An error occurred: " + error.message;

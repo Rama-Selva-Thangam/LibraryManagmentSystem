@@ -1,6 +1,6 @@
 document.getElementById("submitBtn").addEventListener("click", async () => {
-    let userName = document.getElementById("userName").value;
-    let password = document.getElementById("password").value;
+    let userName = document.getElementById("userName").value.trim();
+    let password = document.getElementById("password").value.trim();
     let message = document.getElementById("message");
 
 
@@ -28,6 +28,7 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
         const result = await response.json();
 
         if (result.success) {
+            document.getElementById("userForm").reset();
             window.location.href = "userProcess.jsp";
         } else {
             message.innterText = result.message || "Invalid User Credentials";
