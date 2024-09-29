@@ -12,7 +12,6 @@ import java.io.IOException;
 
 public class LogInFilter implements Filter {
 
-
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
@@ -21,51 +20,65 @@ public class LogInFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
         HttpSession session = httpRequest.getSession(false);
+        String requestURI = httpRequest.getRequestURI();
+
         boolean isUserLoggedIn = (session != null && session.getAttribute("userLoggedIn") != null);
         boolean isAdminLoggedIn = (session != null && session.getAttribute("adminLoggedIn") != null);
 
-        String requestURI = httpRequest.getRequestURI();
-
-        if (!isUserLoggedIn && !requestURI.contains("login.jsp") && !requestURI.contains("adminLogin.jsp")) {
-            Cookie[] cookies = httpRequest.getCookies();
-            if (cookies != null) {
-                for (Cookie cookie : cookies) {
-                    if ("userLoggedIn".equals(cookie.getName())) {
-                        User user = Repository.getInstance().getUserById(Integer.parseInt(cookie.getValue()));
-                        if (user != null) {
-                            session = httpRequest.getSession(true);
-                            session.setAttribute("userLoggedIn", user);
-                            isUserLoggedIn = true;
-                        }
-                        break;
-                    }
-                }
-            }
+  
+        if (!isUserLoggedIn && requestURI.contains("/user")) {
+            isUserLoggedIn = checkUserCookie(httpRequest, session);
         }
 
-        if (!isAdminLoggedIn && !requestURI.contains("login.jsp") && !requestURI.contains("adminLogin.jsp")) {
-            Cookie[] cookies = httpRequest.getCookies();
-            if (cookies != null) {
-                for (Cookie cookie : cookies) {
-                    if ("admin".equals(cookie.getName())) {
-                        session = httpRequest.getSession(true);
-                        session.setAttribute("adminLoggedIn", true);
-                        isAdminLoggedIn = true;
-                        break;
-                    }
-                }
-            }
+        if (!isAdminLoggedIn && requestURI.contains("/admin")) {
+            isAdminLoggedIn = checkAdminCookie(httpRequest, session);
         }
 
-        if (!isUserLoggedIn && !isAdminLoggedIn) {
-            httpResponse.sendRedirect(httpRequest.getContextPath() + "/index.jsp");
+        if (!isUserLoggedIn && requestURI.contains("/user")) {
+            httpResponse.sendRedirect(httpRequest.getContextPath() + "/user/userLogin.jsp");
             return;
-        } else if (isUserLoggedIn && requestURI.contains("admin")) {
+        } else if (!isAdminLoggedIn && requestURI.contains("/admin")) {
+            httpResponse.sendRedirect(httpRequest.getContextPath() + "/admin/adminLogin.jsp");
+            return;
+        } else if (isUserLoggedIn && requestURI.contains("/admin")) {
             httpResponse.sendRedirect(httpRequest.getContextPath() + "/user/userProcess.jsp");
+            return;
+        } else if (isAdminLoggedIn && requestURI.contains("/user")) {
+            httpResponse.sendRedirect(httpRequest.getContextPath() + "/admin/adminProcess.jsp");
             return;
         }
 
         chain.doFilter(request, response);
     }
 
+    private boolean checkUserCookie(HttpServletRequest request, HttpSession session) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("userLoggedIn".equals(cookie.getName())) {
+                    User user = Repository.getInstance().getUserById(Integer.parseInt(cookie.getValue()));
+                    if (user != null) {
+                        session = request.getSession(true);
+                        session.setAttribute("userLoggedIn", user);
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean checkAdminCookie(HttpServletRequest request, HttpSession session) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("adminLoggedIn".equals(cookie.getName())) {
+                    session = request.getSession(true);
+                    session.setAttribute("adminLoggedIn", true);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

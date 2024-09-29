@@ -89,7 +89,7 @@ document.getElementById('logoutBtn').addEventListener('click', async () => {
         });
 
         if (response.ok) {
-            window.location.href = 'myLibraryManagement/index.jsp';
+            window.location.href = '/myLibraryManagement/index.jsp';
         } else {
             console.error('Failed to log out');
         }
