@@ -2,14 +2,12 @@ package librarymanagment.adminservlet;
 
 import java.io.IOException;
 import java.util.HashMap;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.json.simple.JSONObject;
 
 public class AdminLogInServlet extends HttpServlet {
@@ -26,10 +24,13 @@ public class AdminLogInServlet extends HttpServlet {
 
         String userName = request.getParameter("userName");
         String password = request.getParameter("password");
-        HashMap<String,String> jsonResponse = new HashMap<>();
+        HashMap<String, String> jsonResponse = new HashMap<>();
+        HttpSession session = request.getSession(false);
 
         if (adminName.equals(userName) && passwordValue.equals(password)) {
-            HttpSession session = request.getSession(true);
+            if(session==null) {
+            	session = request.getSession(true);
+            }
             session.setAttribute("adminLoggedIn", true);
 
             Cookie adminCookie = new Cookie("adminLoggedIn", "admin");

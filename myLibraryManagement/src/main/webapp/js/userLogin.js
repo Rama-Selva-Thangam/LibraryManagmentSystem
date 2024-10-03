@@ -10,7 +10,7 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
     }
 
     try {
-        const response = await fetch('userlogin', {
+        const response = await fetch('userLogin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

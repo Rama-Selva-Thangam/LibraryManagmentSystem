@@ -9,15 +9,7 @@
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
-	<filter>
-		<filter-name>LogInFilter</filter-name>
-		<filter-class>librarymanagment.filter.LogInFilter</filter-class>
-	</filter>
 
-	<filter-mapping>
-		<filter-name>LogInFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
 
 	<servlet>
 		<servlet-name>AdminLogInServlet</servlet-name>
@@ -113,7 +105,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>LoginUserServlet</servlet-name>
-		<url-pattern>/user/userlogin</url-pattern>
+		<url-pattern>/user/userLogin</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
